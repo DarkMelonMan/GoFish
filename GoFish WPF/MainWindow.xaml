@@ -1,0 +1,49 @@
+﻿<Window x:Class="GoFish_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoFish_WPF"
+        mc:Ignorable="d"
+        Title="Go Fish!" Height="450" Width="600">
+    <Grid x:Name="grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+
+        <Label x:Name="GameProgressLabel" Content="_Игровой прогресс" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20px" Target="{Binding ElementName=Status, Mode=OneWay}" Visibility="Hidden"/>
+        <Label x:Name="HandLabel" Content="_На руках" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20px" Target="{Binding ElementName=Hand, Mode=OneWay}" Visibility="Hidden"/>
+        <Label x:Name="BooksLabel" Content="_Четвёрки" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" FontSize="20px" Target="{Binding ElementName=Books, Mode=OneWay}" Visibility="Hidden" Margin="0,0,0,23"/>
+        <TextBox x:Name="GameStatus" Margin="5,0,15,30" Grid.Row="1" Visibility="Hidden" IsReadOnly="True" Text="{Binding Status, Mode=OneWay}" FontSize="15" TextWrapping="Wrap"/>
+        <TextBox x:Name="Books" Margin="5,0,15,30" Grid.Row="3" Visibility="Hidden" IsReadOnly="True" Text="{Binding BooksStatus, Mode=OneWay}" FontSize="15" TextWrapping="Wrap"/>
+        <ListBox x:Name="Hand" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin ="0,0,9.6,0" Height="228" VerticalAlignment="Top" Visibility="Hidden" ItemsSource="{Binding HumanPlayer.Hand, Mode = OneWay}"/>
+        <Button x:Name="AskForACard" Content="_Попросить карту" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20px" Margin="0,0,0,25" Visibility="Hidden" Click="AskForACard_Click"/>
+        <ListBox x:Name="ChoosePlayerToAskFor" Grid.Column="1" HorizontalAlignment="Left" Height="72" Margin="10,38,0,0" Grid.Row="3" VerticalAlignment="Top" Width="178" Visibility="Hidden" ItemsSource="{Binding Opponents, Mode=OneWay}"/>
+        <Button x:Name="ChooseButton" Content="Выбрать" Grid.Column="1" HorizontalAlignment="Left" Margin="60,3,0,0" Grid.Row="3" VerticalAlignment="Top" Width="81" Height="30" FontSize="18" Visibility="Hidden" Click="ChooseButton_Click"/>
+        <RadioButton x:Name="Finish" Content="Завершить игру" Grid.Column="1" HorizontalAlignment="Left" Margin="39,31,0,0" Grid.Row="3" VerticalAlignment="Top" Height="18" FontSize="14" Checked="Finish_Checked" Visibility="Hidden"/>
+        <RadioButton x:Name="NewGame" Content="Начать заново" Grid.Column="1" HorizontalAlignment="Left" Margin="39,50,0,0" Grid.Row="3" VerticalAlignment="Top" Height="18" FontSize="14" Checked="NewGame_Checked" Visibility="Hidden"/>
+        <TextBox x:Name="EndGame" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin ="0,0,9.6,0" Height="228" VerticalAlignment="Top" Visibility="Hidden" FontSize="25" TextWrapping="Wrap"/>
+
+        <Label x:Name="FirstStageLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="4" Width="250" Height="40" Margin="0,0,0,100" Content="_Введите своё имя" HorizontalContentAlignment="Center" FontSize="24" Target="{Binding ElementName=EnterHumanPlayerName, Mode=OneWay}"/>
+        <TextBox x:Name="EnterHumanPlayerName" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="4" Width="300" Height="30" FontSize="18"/>
+        <Button x:Name="FirstStageConfirmationButton" Content="По_дтвердить" HorizontalAlignment="Center" Margin="220,18,26,12" Grid.Row="2" VerticalAlignment="Center" Width="150" Height="30" FontSize="18" Click="FirstStageConfirmationButton_Click"/>
+
+        <Label x:Name="SecondStageLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="0,0,0,100" Content="В_ыберите число компьютерных игроков" HorizontalContentAlignment="Center" FontSize="24" Target="{Binding ElementName=ChooseNumberOfOpponents, Mode=OneWay}" Visibility="Hidden"/>
+        <Slider x:Name="ChooseNumberOfOpponents" HorizontalAlignment="Left" Margin="220,147,0,0" Grid.Row="1" VerticalAlignment="Top" AutoToolTipPlacement="TopLeft" Maximum="5" Minimum="1" Value="1" MinWidth="150" Visibility="Hidden" SmallChange="1"/>
+        <Button x:Name="SecondStageConfirmationButton" Content="По_дтвердить" HorizontalAlignment="Center" Margin="220,18,26,12" Grid.Row="2" VerticalAlignment="Center" Width="150" Height="30" FontSize="18" Click="SecondStageConfirmationButton_Click" Visibility="Hidden"/>
+
+        <Label x:Name="ThirdStageLabel" HorizontalAlignment="Center" VerticalAlignment="Top" Content="_Добавить имя игрока" Margin="200,0,0,0" FontSize="22" Target="{Binding ElementName=EditOpponentName, Mode=OneWay}" Visibility="Hidden" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <TextBox x:Name="EditOpponentName" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="30" FontSize="18" Grid.ColumnSpan="2" Margin="230,60,0,0" Grid.Row="1" Visibility="Hidden"/>
+        <Button x:Name="ThirdStageAddButton" Content="До_бавить" HorizontalAlignment="Center" Margin="230,120,0,0" Grid.Row="1" VerticalAlignment="Top" Width="130" Height="30" FontSize="18" Visibility="Hidden" Grid.ColumnSpan="2" Click="ThirdStageAddButton_Click"/>
+        <Button x:Name="ThirdStageConfirmationButton" Content="По_дтвердить" HorizontalAlignment="Center" Margin="231,43,15,47" Grid.Row="3" VerticalAlignment="Center" Width="150" Height="30" FontSize="18" Visibility="Hidden" Click="ThirdStageConfirmationButton_Click"/>
+        <ListBox x:Name="OpponentsNames" HorizontalAlignment="Left" Height="200" Margin="25,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="225" FontSize="18" Visibility="Hidden" Grid.RowSpan="3"/>
+    </Grid>
+</Window>
